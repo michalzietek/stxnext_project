@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block container-fluid %}
+    <div class="row">
+        <h2> Books List </h2>
+    </div>
+    <div class="card">
+       <div class="card-body">
+        <form id="search-for-book-form" method="get" href="{% url 'books_list' %}" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                 <div class="col-xl-4 col-auto">
+                     <div class="row ml-1">Title </div>
+                     <div class="row ml-1">{{ form.title}}</div>
+                     <div class="row ml-1">{{ form.title.errors}}</div>
+                 </div>
+                 <div class="col-xl-4 col-auto">
+                     <div class="row ml-1">Author </div>
+                     <div class="row ml-1">{{ form.author}}</div>
+                     <div class="row ml-1">{{ form.author.errors}}</div>
+                 </div>
+                <div class="col-xl-4 col-auto">
+                    <div class="row ml-1">Language </div>
+                     <div class="row ml-1">{{ form.language}}</div>
+                     <div class="row ml-1">{{ form.language.errors}}</div>
+                 </div>
+            </div>
+            <div class="row">
+                 <div class="col-xl-4 col-auto">
+                     <div class="row ml-1">From </div>
+                     <div class="row ml-1">{{ form.lower_date}}</div>
+                     <div class="row ml-1">{{ form.lower_date.errors}}</div>
+                 </div>
+                 <div class="col-xl-4 col-auto">
+                     <div class="row ml-1">To </div>
+                     <div class="row ml-1">{{ form.higher_date}}</div>
+                     <div class="row ml-1">{{ form.higher_date.errors}}</div>
+                 </div>
+                <div class="col-xl-4 col-auto text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+          <div class="table-responsive mt-5">
+             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                   <tr>
+                      <th scope="col">Title</th>
+                      <th scope="col">Author</th>
+                      <th scope="col">Publication Date</th>
+                      <th scope="col">ISBN</th>
+                      <th scope="col">Number of pages</th>
+                      <th scope="col">Link to cover</th>
+                      <th scope="col">Language</th>
+                      <th scope="col">Actions</th>
+                   </tr>
+                </thead>
+                 <tbody>
+                     {% for book in books %}
+                     <tr>
+                        <td>{{ book.title }}</td>
+                        <td>{% if not book.author %}  {% else %}{{ book.author }}{%endif%}</td>
+                        <td>{% if not book.publication_date %}  {% else %}{{ book.publication_date }}{%endif%}</td>
+                        <td>{% if not book.ISBN_number %}  {% else %}{{ book.ISBN_number }}{%endif%}</td>
+                        <td>{% if book.number_of_pages == None %}  {% else %}{{ book.number_of_pages}}{%endif%}</td>
+                        <td><a href="{{ book.link_to_cover }}"><i class="far fa-file-image"></i></a></td>
+                        <td>{% if not book.language%}  {% else %}{{ book.language }}{% endif %}</td>
+                        <td style='white-space: nowrap'>
+                            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                 <a href="{% url 'edit_book' book.pk %}" class="btn-success edit-book-btn btn-circle"  data-toggle="tooltip" title="Edit"><i class="fas fa-fw fa-edit"></i></a>
+                                <form action="{% url 'delete_book' book.pk %}" method="post" style="display: inline">
+                                    {% csrf_token %}
+                                 <button type="submit" class="delete-book-btn btn-xs btn-danger btn-circle" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-fw fa-trash-alt"></i></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                 </tbody>
+             </table>
+          </div>
+       </div>
+    </div>
+{% endblock %}

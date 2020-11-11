@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block container-fluid %}
+<div class="card">
+    <div class="card-body">
+        <form id="search-for-book-form" method="POST" data-url="" novalidate>
+            {% csrf_token %}
+            <div class="row mb-4">
+                 <div class="col-xl-6 col-auto">
+                     <div class="row ml-1">Title </div>
+                     <div class="row ml-1">{{ form.title}}</div>
+                     <div class="row ml-1">{{ form.title.errors}}</div>
+                 </div>
+                 <div class="col-xl-6 col-auto">
+                     <div class="row ml-1">Author </div>
+                     <div class="row ml-1">{{ form.author}}</div>
+                     <div class="row ml-1">{{ form.author.errors}}</div>
+                 </div>
+            </div>
+            <div class="row mb-4">
+                 <div class="col-xl-6 col-auto">
+                     <div class="row ml-1">ISBN Number </div>
+                     <div class="row ml-1">{{ form.ISBN_number}}</div>
+                     <div class="row ml-1">{{ form.ISBN_number.errors}}</div>
+                 </div>
+                 <div class="col-xl-6 col-auto mb-4">
+                     <div class="row ml-1">Language </div>
+                     <div class="row ml-1">{{ form.language}}</div>
+                     <div class="row ml-1">{{ form.language.errors}}</div>
+                 </div>
+            </div>
+            <div class="row mb-4">
+                 <div class="col-xl-6 col-auto">
+                     <div class="row ml-1">Link to cover </div>
+                     <div class="row ml-1">{{ form.link_to_cover}}</div>
+                     <div class="row ml-1">{{ form.link_to_cover.errors}}</div>
+                 </div>
+                 <div class="col-xl-6 col-auto">
+                     <div class="row ml-1">Publication year </div>
+                     <div class="row ml-1">{{ form.publication_date}}</div>
+                     <div class="row ml-1">{{ form.publication_date.errors}}</div>
+                 </div>
+            </div>
+            <div class="row mb-4">
+                 <div class="col-xl-6 col-auto">
+                     <div class="row ml-1">Number of pages </div>
+                     <div class="row ml-1">{{ form.number_of_pages}}</div>
+                     <div class="row ml-1">{{ form.number_of_pages.errors}}</div>
+                 </div>
+            </div>
+            <div class="row mt-4 ml-0">
+                <button type="submit" class="save btn btn-default btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

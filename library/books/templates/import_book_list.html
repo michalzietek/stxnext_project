@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block container-fluid %}
+    <div class="row">
+        <h2> Import Book </h2>
+    </div>
+    <div class="card">
+       <div class="card-body">
+        <form id="search-for-book-form" method="post" href="{% url 'books_list' %}" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                 <div class="col-xl-4 col-auto">
+                    {{ form.title|as_crispy_field }}
+                 </div>
+                 <div class="col-xl-4 col-auto">
+                    {{ form.author|as_crispy_field }}
+                 </div>
+                <div class="col-xl-4 col-auto">
+                    {{ form.publisher|as_crispy_field }}
+                 </div>
+            </div>
+            <div class="row mt-1">
+                 <div class="col-xl-4 col-auto">
+                    {{ form.subject|as_crispy_field }}
+                 </div>
+                 <div class="col-xl-4 col-auto">
+                    {{ form.isbn|as_crispy_field }}
+                 </div>
+                <div class="col-xl-4 col-auto">
+                    {{ form.lccn|as_crispy_field }}
+                 </div>
+            </div>
+            <div class="row mt-1">
+                 <div class="col-xl-4 col-auto">
+                    {{ form.oclc|as_crispy_field }}
+                 </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-auto text-center mt-4 text-center">
+                    <button type="submit" class="btn btn-primary">Import</button>
+                </div>
+            </div>
+        </form>
+       </div>
+    </div>
+    {% if imported == False %}
+    <div class="row d-flex justify-content-center">
+        <h4 class="mt-4">NO BOOKS WERE IMPORTED BOOKS</h4>
+    </div>
+    {% endif %}
+    {% if books %}
+    <div class="row d-flex justify-content-center">
+        <h4 class="mt-4">IMPORTED BOOKS</h4>
+    </div>
+     <div class="table-responsive mt-0">
+             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                   <tr>
+                      <th scope="col">Title</th>
+                      <th scope="col">Author</th>
+                      <th scope="col">Link to cover</th>
+                   </tr>
+                </thead>
+                 <tbody>
+                     {% for book in books %}
+                     <tr>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td><a href="{{ book.image_link }}"><i class="far fa-file-image"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                 </tbody>
+             </table>
+          </div>
+    {% endif %}
+{% endblock %}
