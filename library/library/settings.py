@@ -136,5 +136,3 @@ try:
     from .local_settings import *  # NOQA
 except ImportError:
     pass
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
